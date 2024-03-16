@@ -1,0 +1,37 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<mat-toolbar [ngSwitch]="menuType">
+    <button *ngSwitchCase="'user'" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span *ngSwitchCase="'default'">Rosystems</span>
+    <span *ngSwitchCase="'user'">{{tallerName}}</span>
+
+    <span class="example-spacer"></span>
+     
+        <button class="ms-auto" *ngSwitchCase="'default'" routerLink="/login" mat-raised-button color="primary">Login</button>
+        <div class="ms-auto" *ngSwitchCase="'user'">
+            <i style="font-size: 13px;">{{userName}}</i>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>add</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>marca</mat-icon>
+                  <span>Redial</span>
+                </button>
+                <button mat-menu-item disabled>
+                  <mat-icon>voicemail</mat-icon>
+                  <span>Check voice mail</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Inhabilitar alerts</span>
+                </button>
+              </mat-menu>          
+        </div>
+    
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
