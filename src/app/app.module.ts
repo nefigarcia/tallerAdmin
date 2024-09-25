@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
 import { InicioComponent } from './componentes/inicio/inicio.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,6 +14,22 @@ import { HeaderComponent } from './componentes/header/header.component';
 import { FooterComponent } from './componentes/footer/footer.component';
 import { LoginComponent } from './componentes/login/login.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { AddestimacionComponent } from './componentes/addestimacion/addestimacion.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialog,MatDialogRef,MatDialogActions,MatDialogClose,MatDialogTitle,MatDialogContent,MatDialogModule} from '@angular/material/dialog';
+import { ModaladdestimacionComponent } from './componentes/modaladdestimacion/modaladdestimacion.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { AddclienteComponent } from './componentes/addcliente/addcliente.component';
+import { AddcarroComponent } from './componentes/addcarro/addcarro.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select';
+import { MatSort } from '@angular/material/sort';
+
+
 
 @NgModule({
   declarations: [
@@ -21,14 +37,20 @@ import {MatMenuModule} from '@angular/material/menu';
     InicioComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AddestimacionComponent,
+    ModaladdestimacionComponent,
+    AddclienteComponent,
+    AddcarroComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule,
     MatButtonModule,MatIconModule, MatToolbarModule, BrowserAnimationsModule, HttpClientModule,
-    MatMenuModule
+    MatMenuModule,MatAutocompleteModule,MatFormFieldModule,MatInputModule,
+    MatTabsModule,MatDialogModule,MatExpansionModule,MatSelectModule,MatCardModule,MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

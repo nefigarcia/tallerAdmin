@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { signUp,user,taller } from '../models/data-type';
+import { signUp,user,taller, cliente, vehicleInfo } from '../models/data-type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContextService {
+  daaClientes:boolean=false;
   userDa:user[]=[];
   tallerDa:taller={
     name: '',
@@ -16,6 +17,9 @@ export class ContextService {
     email: '',
     password: ''
   }
+  clientes: string[]=[];
+  
+  
   constructor() { }
 
   setUserDa(userDa: user[]){
@@ -37,4 +41,21 @@ export class ContextService {
   getSignup(){
     return this.signupDa;
   }
+  setClientes(cliente:string[]){
+    //this.clientes.push(cliente)
+    this.clientes=cliente
+  }
+  getClientes(){
+    return this.clientes;
+  }
+  setCliente(cliente:string){
+    this.clientes.push(cliente)
+  }
+  getDaaClientes(){
+    return this.daaClientes;
+  }
+  setDaaClientes(){
+    this.daaClientes=true
+  }
+  
 }
