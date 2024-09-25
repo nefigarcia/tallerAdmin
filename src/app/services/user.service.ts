@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { login, signUp,user,taller } from '../models/data-type';
+import { login, signUp,user,taller, cliente } from '../models/data-type';
 import { ContextService } from './context.service';
-import { LoginComponent } from '../componentes/login/login.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,18 @@ export class UserService {
   private urlApi= environment.apiUrl + "/users"
   private urlReg=environment.apiUrl + "/RegistroUsuario"
   private urlRegTaller=environment.apiUrl+"/RegistroTaller"
-  private heaters={'mode':'cors'};
+  private urlRegCliente=environment.apiUrl+"/Regcliente"
+  private urlClientes=environment.apiUrl+"/Clientes"
+  private urlRegCarro=environment.apiUrl+"/RegCarro"
+  private urlCarros=environment.apiUrl+"/Carros"
+
+  clientes:string[]=[]
+  private clientess=new BehaviorSubject<any[]>([])
+  public stClientes$=this.clientess.asObservable();
+
+  private carross=new BehaviorSubject<any[]>([])
+  public stCarros$=this.carross.asObservable();
+
   constructor(private http: HttpClient, private router:Router, private context: ContextService ) { }
 
   userLogin(data: login){
@@ -28,24 +39,6 @@ export class UserService {
     })
   }
 
-   /*userSignUp(data: signUp) {
-    
-    this.http.post(this.urlReg, data,{observe: 'response'})
-    .subscribe((result)=>{
-
-      if(result.ok){
-         this.re=true;
-         console.log("ok",this.re)
- 
-        //this.router.navigate(['/'])
-      }else{ 
-        console.log("false")
-      }
-    });
-    
-    console.log("return2",this.re)
-
-  }*/
  userSignUp(data: signUp,myStatus: (st:boolean)=>void ){
   this.http.post(this.urlReg, data,{observe: 'response'})
     .subscribe((result)=>{
@@ -59,8 +52,6 @@ export class UserService {
         console.log("false")
       }
     })
-    
-
 }
 
   userSignUpTaller(data: taller, changeTaller: (st:boolean)=>void){
@@ -79,4 +70,49 @@ export class UserService {
         }
       })
   }
+
+ addCliente(data:string,callBack:(st:boolean)=>void) {
+  this.http.post(this.urlRegCliente,data,{observe:'response'})
+   .subscribe((result)=>{
+    if(result.ok){
+      this.context.setCliente(data)
+      callBack(result.ok)
+    }
+   })
+ }
+ getClientes(){
+  this.http.get<any[]>(this.urlClientes+`?tallerid=${this.context.getUserDa()[0].TALLER_ID}`,{observe:'response'})
+   .subscribe((result)=>{
+      if(result && Array.isArray(result.body)){
+        this.clientes=result.body
+        this.context.setClientes(this.clientes)
+        this.updateClientes(result.body)
+        console.log("clien",this.context.getClientes())
+      }
+   })
+ }
+
+ updateClientes(newArr:any[]){
+  //var fiClientes=newArr.map((i)=>({nombre:i.NOMBRE, apellidos:i.APELLIDOS}))
+  this.clientess.next(newArr)
+ }
+
+ addCarro(data:string,callbac:(st:boolean)=>void){
+  this.http.post(this.urlRegCarro,data,{observe:"response"})
+  .subscribe((result)=>{
+    if(result.ok){
+      callbac(result.ok)
+    }
+  })
+ }
+
+ getCarros(){
+  this.http.get<any[]>(this.urlCarros+`?tallerid=${this.context.getUserDa()[0].TALLER_ID}`,{observe:"response"})
+   .subscribe((result)=>{
+    if(result && Array.isArray(result.body)){
+      this.carross.next(result.body)
+    }
+   })
+ }
+ 
 }

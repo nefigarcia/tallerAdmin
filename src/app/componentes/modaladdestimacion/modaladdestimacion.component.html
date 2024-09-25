@@ -1,0 +1,40 @@
+<form class="formsize">  
+    <input type="text" placeholder="Vehiculo" matInput [formControl]="myControl"
+    [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+     <mat-option *ngFor="let option of options" [value]="option">
+      {{option}}
+     </mat-option>
+    </mat-autocomplete>
+ </form>
+<mat-dialog-content>
+    <mat-tab-group animationDuration="0ms" *ngIf="!openAddservicio">
+        <mat-tab label="Servicios">
+            <mat-accordion>
+                <mat-panel-title>Servicios del Taller
+                    <button class="ms-auto" (click)="openAddservicio=true">Crear servicio</button>
+                </mat-panel-title> 
+                <mat-expansion-panel *ngFor="let servicios of serviciost" (opened)="panelOpenState = true"
+                                     (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      {{servicios.NOMBRE}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                       {{panelOpenState ? 'CLOSE' : 'OPEN'}}
+                      <button class="ms-auto" color="primary" (click)="cannedServicio(servicios)">+</button>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <p>"DESCRIP</p>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </mat-tab>
+      </mat-tab-group>
+      <form *ngIf="openAddservicio" #addcliente="ngForm" class="common-form" (ngSubmit)="addServicio(addcliente.value)" >
+              <input [style.width.px]=170 type="text" class="form-input" placeholder="Nombre servicio" name="NOMBRE" ngModel #nombre required/>         
+          <button [style.width.px]=170 [disabled]="addcliente.invalid" class="form-button">Registrar</button>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button id="btClose" (click)="clTest()" mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

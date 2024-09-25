@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>Agregar Carro</h2>
+<mat-dialog-content >
+    <form #addcarro="ngForm" class="common-form" (ngSubmit)="addCarro(addcarro.value)" >
+      <!--  <input 
+            type="text"
+            class="form-input"
+            placeholder="Marca"
+            name="MARCA"
+            ngModel
+            #MARCA
+            required
+        />
+        <input
+        type="text"
+        class="form-input"
+        placeholder="Modelo"
+        name="MODELO"
+        ngModel
+        #MODELO
+        required
+        />
+        <input
+        type="text"
+        class="form-input"
+        name="YEAR"
+        placeholder="Year"
+        ngModel
+        #YEAR
+        required
+         />
+         <input
+         type="text"
+         class="form-input"
+         placeholder="placa"
+         name="PLACA"
+         ngModel
+         #PLACA
+         required
+     />
+            <input
+            type="text"
+            class="form-input"
+            placeholder="vin(opcional)"
+            name="VIN"
+            ngModel
+            #VIN
+            
+        />-->
+        <mat-form-field>
+            <mat-label>Year</mat-label>
+             <mat-select [(ngModel)]="selectedYear" name="YEAR" (selectionChange)="selectYear($event.value)">
+                <mat-option *ngFor="let year of carYear" [value]="year.YEAR">{{year.YEAR}}</mat-option>
+             </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="carMarcas.length">
+          <mat-label>Marca</mat-label>
+           <mat-select [(ngModel)]="selectedMarca" name="MARCA" (selectionChange)="selectMarca($event.value)">
+              <mat-option *ngFor="let marca of carMarcas" [value]="marca">{{marca.make}}</mat-option>
+           </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="carModelos.length">
+        <mat-label>Modelo</mat-label>
+         <mat-select [(ngModel)]="selectedModelo" name="MODELO" (selectionChange)="selectModelo($event.value)">
+            <mat-option *ngFor="let modelo of carModelos" [value]="modelo">{{modelo.model}}</mat-option>
+         </mat-select>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="carMotores.length">
+      <mat-label>Motor</mat-label>
+       <mat-select [(ngModel)]="selectedMotor" name="MOTOR" (selectionChange)="selectMotor($event.value)">
+          <mat-option *ngFor="let motor of carMotores" [value]="motor">{{motor.engine}}</mat-option>
+       </mat-select>
+  </mat-form-field>
+     <button [disabled]="addcarro.invalid" class="form-button">Registrar</button>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button id="btclose" #btclose (click)="cltest()" mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

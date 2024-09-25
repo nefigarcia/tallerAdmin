@@ -1,0 +1,126 @@
+
+<div class="container">
+  <form class="example-form">
+      <div  class="row align-items-center border ">
+        <div class="col-sm border">          
+            <mat-icon>perm_identity</mat-icon>
+             <div *ngIf="!stCliente">
+              <input type="text" placeholder="Cliente" matInput [formControl]="myControl"
+              [matAutocomplete]="auto" >
+             <button class="ms-auto color=primary" (click)="openAddcliente('0ms','0ms')">+</button>            
+             </div>
+             <div *ngIf="stCliente">
+                <a>{{cliente.NA}}</a>
+                <a>{{cliente.EMAIL}}</a>
+                <a>{{cliente.TELEFONO}}</a>
+                <button class="ms-auto color=primary" (click)="decliente()">x</button>
+             </div>
+         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="getClientepr($event.option)">
+            <mat-option *ngFor="let option of filteredOptions |async" [value]="option" >
+              {{option.NA}}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="col-sm">
+          <mat-icon> directions_car</mat-icon>
+           <div *ngIf="!stCarro">
+            <input type="text" placeholder="Vehiculo" matInput [formControl]="mycontrol2"
+            [matAutocomplete]="autoo">
+            <button class="ms-auto color=primary" (click)="openAddcarro('0ms','0ms')">+</button>
+           </div>
+           <div *ngIf="stCarro">
+            <a>{{vehicleInfo.year}}</a>
+            <a>{{vehicleInfo.make}}</a>
+            <button class="ms-auto color=primary" (click)="decarro()">x</button>
+           </div>  
+        <mat-autocomplete #autoo="matAutocomplete" (optionSelected)="getCarropr($event.option)">
+          <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">
+            {{option.MARCA}}{{" "}}{{option.MODELO}}{{" "}}{{option.PLACA}}
+         </mat-option>
+      </mat-autocomplete>
+        </div>
+      </div> 
+  </form>
+  <h3>Estimacion</h3>
+   <div class="row">
+      <div class="col-sm">
+        <button><mat-icon>local_printshop</mat-icon></button>
+        <button>enviar</button>
+        <button>Guardar</button>
+      </div>
+   </div>
+
+<mat-tab-group [selectedIndex]="indexTab" animationDuration="0ms">
+  <mat-tab label="Servicios">
+     <form>     
+        <input type="text" placeholder="Buscar Servicio" matInput [formControl]="myControl"
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of daClientes" [value]="option">
+          {{option}}
+       </mat-option>
+    </mat-autocomplete>
+    <button mat-raised-button (click)="openDialog('0ms', '0ms')">+ Servicio</button>
+     </form>
+       
+        <table *ngFor="let est of estiservicios" >
+          <thead>{{est.NOMBRE}}</thead>
+          <thead>
+            <tr>
+              <th>DESCRIPCION</th>
+              <th>QTY/HRS</th>
+              <th>PRECIO</th>
+              <th>ESTADO</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of est.TIPO">
+              <th>{{b.DESCRIPCION}}</th>
+              <th>{{b.CANTIDAD}}</th>
+              <th>{{b.PRECIO}}</th>
+              <th>{{b.ESTADO}}</th>
+
+            </tr>
+            <tr *ngIf="addrow===est.ID">
+              <td>
+                 <input type="text" placeholder="Descripcion" [(ngModel)]="descripcion"/>
+             </td>
+             <td>
+                 <input type="text" placeholder="Numero" [(ngModel)]="numero"/>
+             </td>
+             <td>
+              <input type="text" placeholder="$Precio" [(ngModel)]="precio"/>
+             </td>
+             <td><button (click)="save(est)">Si</button> <button (click)="delete()">x</button></td>
+         </tr>
+          </tbody>
+          <button (click)="addLabor(est)">+Labor</button>
+          <button (click)="addPiezaTab(est)">+Piezas</button>
+        </table>
+      
+     
+    
+  </mat-tab>
+  <mat-tab label="Refacciones">
+    <mat-form-field>
+      <mat-label>Refaccion</mat-label>
+      <input matInput type="text" [(ngModel)]="valueRefa">
+        <button *ngIf="valueRefa" matSuffix mat-icon-button aria-label="Clear" (click)="getRefa()">
+           <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-card class="example-form">
+      <mat-card-header *ngFor="let record of productos[0]">
+        <mat-card-title-group>
+          <mat-card-title>{{record.brand}}</mat-card-title>
+          <mat-card-subtitle>${{record.attributes.P_ItemPrice[0].slice(0,record.attributes.P_ItemPrice[0].length-4)}}</mat-card-subtitle>
+          <img mat-card-sm-image src={{record.productImageUrl}}>
+        </mat-card-title-group>
+        <mat-card-content> {{record.description}}<button (click)="addPieza(record)">Add</button></mat-card-content>
+      </mat-card-header>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Third">Content 3</mat-tab>
+</mat-tab-group>
+</div>

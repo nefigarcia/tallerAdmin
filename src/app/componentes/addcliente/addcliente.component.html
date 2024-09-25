@@ -1,0 +1,47 @@
+<h2 mat-dialog-title>Nuevo Cliente</h2>
+<mat-dialog-content >
+    <form #addcliente="ngForm" class="common-form" (ngSubmit)="addCliente(addcliente.value)" >
+        <input 
+            type="text"
+            class="form-input"
+            placeholder="Cliente"
+            name="name"
+            ngModel
+            #name
+            required
+        />
+        <input
+        type="text"
+        class="form-input"
+        placeholder="apellidos"
+        name="apellidos"
+        ngModel
+        #apellidos
+        required
+        />
+        <input
+        type="text"
+        class="form-input"
+        name="email"
+        placeholder="Email Cliente"
+        ngModel
+        email
+        #email="ngModel"
+        required
+         />
+         <p class="invalid-input"><span *ngIf="email.invalid && email.touched " >Por favor ingresa email valido</span></p>
+         <input
+         type="tel"
+         class="form-input"
+         placeholder="Tel. o whatss"
+         name="tel"
+         ngModel
+         #tel
+         required
+     />
+     <button [disabled]="addcliente.invalid" class="form-button">Registrar</button>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button id="btclose" #btclose (click)="cltest()" mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
